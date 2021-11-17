@@ -1,6 +1,14 @@
 const express = require('express');
 const app = express();
-const client = require('../../utility/configDatabase');
+const client = require('./utility/configDatabase');
+// const { Pool } = require('pg');
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: {
+//     rejectUnauthorized: false
+//   }
+// })
+// const client = await pool.connect();
 
 app.get("/show", async (req, res) => {
     try {
@@ -18,6 +26,7 @@ app.post('/login', async (req, res) => {
         const password = req.body.password;
 
         const values = await client.query(`SELECT COUNT(username) FROM akun WHERE username = ${username} AND password = ${password}`);
+
 
     } catch (err) {
 

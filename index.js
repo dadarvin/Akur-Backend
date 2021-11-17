@@ -2,8 +2,6 @@ const cool = require('cool-ascii-faces');
 const express = require('express')
 const app = express();
 const cors = require('cors');
-const menu = require('./controllers/routePath')
-
 const path = require('path')
 const PORT = process.env.PORT || 5000
 // const DATABASE_URL = "ec2-34-198-189-252.compute-1.amazonaws.com";
@@ -14,7 +12,8 @@ const PORT = process.env.PORT || 5000
 //     rejectUnauthorized: false
 //   }
 // })
-const client = require('./utility/configDatabase');
+const menu = require(path.join(__dirname, './controllers/routePath'));
+const client = require(path.join(__dirname, './utility/configDatabase'));
 
 app
   .use(express.static(path.join(__dirname, 'public')))

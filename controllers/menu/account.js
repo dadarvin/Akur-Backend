@@ -13,7 +13,7 @@ const client = require(path.join(__dirname, '../../utility/configDatabase'));
 
 app.get("/show", async (req, res) => {
     try {
-        const values = await client.query("SELECT * FROM akun");
+        const values = await client.query("SELECT * FROM users");
         res.json(values.rows);
     } catch (err) {
         console.error(err.message);
@@ -26,7 +26,7 @@ app.post('/login', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
-        const values = await client.query(`SELECT COUNT(username) FROM akun WHERE username = ${username} AND password = ${password}`);
+        const values = await client.query(`SELECT COUNT(username) FROM users WHERE username = ${username} AND password = ${password}`);
 
 
     } catch (err) {
@@ -41,7 +41,7 @@ app.post('/register', async (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
 
-        const values = await client.query(`INSERT INTO akun (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
+        const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
 
         console.log("Akun Berhasil didaftarkan");
         res.json(values.rows[0]);
@@ -59,10 +59,10 @@ app.post("/changePassword", async (req, res) => {
         const newPassword = req.body.newPassword;
         const username = req.body.username;
 
-        let checkPassword = await client.query(`SELECT password FROM akun WHERE username = '${username}'`);
+        let checkPassword = await client.query(`SELECT password FROM users WHERE username = '${username}'`);
         // console.log(checkPassword.rows)
         if (checkPassword.rows[0].password == oldPassword) {
-            const values = await client.query(`UPDATE akun SET password = '${newPassword}' WHERE username = '${username}'`);
+            const values = await client.query(`UPDATE users SET password = '${newPassword}' WHERE username = '${username}'`);
             // res.json({
             //   success:true
             // })

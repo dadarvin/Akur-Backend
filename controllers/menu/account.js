@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path')
-const client = require(path.join(__dirname, 'utility/configDatabase'));
+const client = require(path.join(__dirname, '../../utility/configDatabase'));
 // const { Pool } = require('pg');
 // const pool = new Pool({
 //   connectionString: process.env.DATABASE_URL,

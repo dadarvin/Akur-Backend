@@ -12,8 +12,8 @@ const PORT = process.env.PORT || 5000
 //     rejectUnauthorized: false
 //   }
 // })
-const menu = require(path.join(__dirname, './controllers/routePath'));
-const client = require(path.join(__dirname, './utility/configDatabase'));
+const menu = require(path.join(__dirname, 'controllers/routePath'));
+const client = require(path.join(__dirname, 'utility/configDatabase'));
 
 app
   .use(express.static(path.join(__dirname, 'public')))

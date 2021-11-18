@@ -90,6 +90,8 @@ app.post("/updateInfo", async (req, res) => {
         const nama_toko = req.body.nama_toko;
         const phone_number = req.body.phone_number;
 
+        console.log(phone_number);
+
         if (nama_toko === undefined || nama_toko == null) {
             const values = await client.query(`UPDATE users SET phone_number = '${phone_number}' WHERE user_id = ${user_id}`);
             res.json(true);

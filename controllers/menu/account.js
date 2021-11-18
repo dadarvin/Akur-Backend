@@ -86,9 +86,9 @@ app.post('/userinfo', async (req, res) => {
 
 app.post("/updateInfo", async (req, res) => {
     try {
-        const user_id = req.body.oldPassword;
-        const nama_toko = req.body.newPassword;
-        const phone_number = req.body.username;
+        const user_id = req.body.user_id;
+        const nama_toko = req.body.nama_toko;
+        const phone_number = req.body.phone_number;
 
         if (nama_toko === undefined || nama_toko == null) {
             const values = await client.query(`UPDATE users SET phone_number = '${phone_number}' WHERE user_id = ${user_id}`);

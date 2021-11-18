@@ -27,7 +27,7 @@ app.post('/login', async (req, res) => {
         const password = req.body.password;
 
         const values = await client.query(`SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`);
-        if (values.rows.length < 1) {
+        if (values.rows.length === undefined || values.rows.length < 1) {
             res.json({
                 user_id: -1
             })
@@ -54,7 +54,7 @@ app.post('/register', async (req, res) => {
         } else {
             const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
             console.log("Akun Berhasil didaftarkan");
-            res.json(values);
+            res.json("Successfully Registered");
         }
 
     } catch (err) {

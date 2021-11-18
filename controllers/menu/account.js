@@ -27,8 +27,15 @@ app.post('/login', async (req, res) => {
         const password = req.body.password;
 
         const values = await client.query(`SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`);
-
-        res.json(values);
+        if (values.rows.length < 1) {
+            res.json({
+                user_id: -1
+            })
+        } else if (values.rows.length >= 1) {
+            res.json({
+                user_id: values.rows[0].user_id,
+            });
+        }
     } catch (err) {
 
     }
@@ -40,10 +47,16 @@ app.post('/register', async (req, res) => {
         let email = req.body.email;
         let password = req.body.password;
 
-        const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
+        const checkExisting = await client.query(`SELECT COUNT(username) from users WHERE username = '${username}'`);
 
-        console.log("Akun Berhasil didaftarkan");
-        res.json(values);
+        if (checkExisting.rows.length >= 1) {
+            res.json("User Exists !");
+        } else {
+            const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
+            console.log("Akun Berhasil didaftarkan");
+            res.json(values);
+        }
+
     } catch (err) {
         console.error(err.message);
         console.log("Akun gagal didaftarkan");

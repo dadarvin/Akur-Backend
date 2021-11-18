@@ -1,4 +1,3 @@
-const cool = require('cool-ascii-faces');
 const express = require('express')
 const app = express();
 const cors = require('cors');
@@ -21,12 +20,7 @@ app
   .use(express.urlencoded({
     extended: true
   }))
-  .use(express.static(path.join(__dirname, 'public')))
   .use(cors())
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  // .get('/', (req, res) => res.render('pages/index'))
-  .get('/cool', (req, res) => res.send(cool()));
 
 app.get('/', async function (req, res) {
   try {

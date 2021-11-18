@@ -26,9 +26,9 @@ app.post('/login', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
-        const values = await client.query(`SELECT COUNT(username) FROM users WHERE username = ${username} AND password = ${password}`);
+        const values = await client.query(`SELECT *  FROM users WHERE username = ${username} AND password = ${password}`);
 
-
+        res.json(values);
     } catch (err) {
 
     }
@@ -58,7 +58,7 @@ app.post('/register', async (req, res) => {
         const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
 
         console.log("Akun Berhasil didaftarkan");
-        res.json(values.rows[0]);
+        res.json(values);
     } catch (err) {
         console.error(err.message);
         console.log("Akun gagal didaftarkan");

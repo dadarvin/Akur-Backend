@@ -21,6 +21,30 @@ app.get("/show", async (req, res) => {
     }
 });
 
+
+app.post('/register', async (req, res) => {
+    try {
+        let username = req.body.username;
+        let email = req.body.email;
+        let password = req.body.password;
+
+        const checkExisting = await client.query(`SELECT COUNT(username) from users WHERE username = '${username}'`);
+
+        if (checkExisting.rows[0].count > 0) {
+            res.json("User Exists !");
+        } else {
+            const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
+            console.log("Akun Berhasil didaftarkan");
+            res.json("Successfully Registered");
+        }
+
+    } catch (err) {
+        console.error(err.message);
+        console.log("Akun gagal didaftarkan");
+        res.json(err);
+    }
+});
+
 app.post('/login', async (req, res) => {
     try {
         const username = req.body.username;
@@ -60,29 +84,25 @@ app.post('/userinfo', async (req, res) => {
     }
 });
 
-app.post('/register', async (req, res) => {
+app.post("/updateInfo", async (req, res) => {
     try {
-        let username = req.body.username;
-        let email = req.body.email;
-        let password = req.body.password;
+        const user_id = req.body.oldPassword;
+        const nama_toko = req.body.newPassword;
+        const phone_number = req.body.username;
 
-        const checkExisting = await client.query(`SELECT COUNT(username) from users WHERE username = '${username}'`);
-
-        if (checkExisting.rows[0].count > 0) {
-            res.json("User Exists !");
-        } else {
-            const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
-            console.log("Akun Berhasil didaftarkan");
-            res.json("Successfully Registered");
+        if (nama_toko === undefined || nama_toko == null) {
+            const values = await client.query(`UPDATE users SET phone_number = '${phone_number}' WHERE user_id = ${user_id}`);
+            res.json(true);
         }
-
+        if (phone_number === undefined || phone_number == null) {
+            const values = await client.query(`UPDATE users SET nama_toko = '${nama_toko}' WHERE user_id = ${user_id}`);
+            res.json(true);
+        }
     } catch (err) {
         console.error(err.message);
-        console.log("Akun gagal didaftarkan");
         res.json(err);
     }
 });
-
 
 app.post("/changePassword", async (req, res) => {
     try {

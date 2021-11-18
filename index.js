@@ -2,7 +2,7 @@ const cool = require('cool-ascii-faces');
 const express = require('express')
 const app = express();
 const cors = require('cors');
-const path = require('path')
+const path = require('path');
 const PORT = process.env.PORT || 5000
 // const DATABASE_URL = "ec2-34-198-189-252.compute-1.amazonaws.com";
 // const { Pool } = require('pg');
@@ -18,6 +18,7 @@ const client = require(path.join(__dirname, 'utility/configDatabase'));
 app
   .use(express.static(path.join(__dirname, 'public')))
   .use(cors())
+  .use(express.bodyParser())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   // .get('/', (req, res) => res.render('pages/index'))

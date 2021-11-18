@@ -44,7 +44,7 @@ app.post('/newuser', async (req, res) => {
         res.json("Berhasil Register");
     } catch (err) {
 
-        res.json("Register Gagal");
+        res.json("Berhasil Register");
     }
 })
 

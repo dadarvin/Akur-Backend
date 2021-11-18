@@ -41,6 +41,25 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.post('/userinfo', async (req, res) => {
+    try {
+        const user_id = req.body.user_id;
+
+        const values = await client.query(`SELECT * FROM users WHERE user_id = ${user_id}`);
+        if (values.rows.length === undefined || values.rows.length < 1) {
+            res.json("User Id not exists");
+        } else if (values.rows.length >= 1) {
+            res.json({
+                nama_toko: values.rows[0].nama_toko,
+                email: values.rows[0].email,
+                username: values.rows[0].username
+            });
+        }
+    } catch (err) {
+
+    }
+});
+
 app.post('/register', async (req, res) => {
     try {
         let username = req.body.username;

@@ -90,12 +90,10 @@ app.post("/updateInfo", async (req, res) => {
         const nama_toko = req.body.nama_toko;
         const phone_number = req.body.phone_number;
 
-        console.log(phone_number);
-
-        if (nama_toko === undefined || nama_toko == null) {
+        if (nama_toko === undefined || nama_toko == null || nama_toko == "") {
             const values = await client.query(`UPDATE users SET phone_number = '${phone_number}' WHERE user_id = ${user_id}`);
             res.send(true);
-        } else if (phone_number === undefined || phone_number == null) {
+        } else if (phone_number === undefined || phone_number == null || phone_number == "") {
             const values = await client.query(`UPDATE users SET nama_toko = '${nama_toko}' WHERE user_id = ${user_id}`);
             res.send(true);
         } else {

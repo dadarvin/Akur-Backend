@@ -34,14 +34,28 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.post('/newuser', async (req, res) => {
+    try {
+        let username = req.body.username;
+        let password = req.body.password;
+
+        let values = await client.query(`INSERT INTO users (username, email, password) VALUES (${username}, 'test@domain.com', ${password})`);
+
+        res.json("Berhasil Register");
+    } catch (err) {
+
+        res.json("Register Gagal");
+    }
+})
+
 
 app.post('/register', async (req, res) => {
     try {
-        let name = req.body.name;
+        let username = req.body.username;
         let email = req.body.email;
         let password = req.body.password;
 
-        const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${name}', '${email}', '${password}')`);
+        const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
 
         console.log("Akun Berhasil didaftarkan");
         res.json(values.rows[0]);

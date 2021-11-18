@@ -26,7 +26,7 @@ app.post('/login', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
-        const values = await client.query(`SELECT *  FROM users WHERE username = ${username} AND password = ${password}`);
+        const values = await client.query(`SELECT * FROM users WHERE username = ${username} AND password = ${password}`);
 
         res.json(values);
     } catch (err) {

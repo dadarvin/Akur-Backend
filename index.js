@@ -47,4 +47,21 @@ app.get('/db', async (req, res) => {
   }
 })
 
+app.post('/register', async (req, res) => {
+  try {
+    let username = req.body.username;
+    let email = req.body.email;
+    let password = req.body.password;
+
+    const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
+
+    console.log("Akun Berhasil didaftarkan");
+    res.json(values.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    console.log("Akun gagal didaftarkan");
+    res.json(err);
+  }
+});
+
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))

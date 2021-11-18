@@ -37,7 +37,7 @@ app.post('/login', async (req, res) => {
 
 app.post('/register', async (req, res) => {
     try {
-        let name = req.body.username;
+        let name = req.body.name;
         let email = req.body.email;
         let password = req.body.password;
 

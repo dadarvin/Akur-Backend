@@ -26,28 +26,13 @@ app.post('/login', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
-        const values = await client.query(`SELECT * FROM users WHERE username = ${username} AND password = ${password}`);
+        const values = await client.query(`SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`);
 
         res.json(values);
     } catch (err) {
 
     }
 });
-
-app.post('/newuser', async (req, res) => {
-    try {
-        let username = req.body.username;
-        let password = req.body.password;
-
-        let values = await client.query(`INSERT INTO users (username, email, password) VALUES (${username}, 'test@domain.com', ${password})`);
-
-        res.json("Berhasil Register");
-    } catch (err) {
-
-        res.json("Berhasil Register");
-    }
-})
-
 
 app.post('/register', async (req, res) => {
     try {

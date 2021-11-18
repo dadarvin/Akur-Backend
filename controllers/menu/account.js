@@ -49,7 +49,7 @@ app.post('/register', async (req, res) => {
 
         const checkExisting = await client.query(`SELECT COUNT(username) from users WHERE username = '${username}'`);
 
-        if (checkExisting.rows.length >= 1) {
+        if (checkExisting.rows[0].count === 0) {
             res.json("User Exists !");
         } else {
             const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);

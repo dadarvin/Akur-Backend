@@ -95,11 +95,14 @@ app.post("/updateInfo", async (req, res) => {
         if (nama_toko === undefined || nama_toko == null) {
             const values = await client.query(`UPDATE users SET phone_number = '${phone_number}' WHERE user_id = ${user_id}`);
             res.send(true);
-        }
-        if (phone_number === undefined || phone_number == null) {
+        } else if (phone_number === undefined || phone_number == null) {
             const values = await client.query(`UPDATE users SET nama_toko = '${nama_toko}' WHERE user_id = ${user_id}`);
             res.send(true);
+        } else {
+            const values = await client.query(`UPDATE users SET nama_toko = '${nama_toko}', phone_number = '${phone_number}' WHERE user_id = ${user_id}`);
+            res.send(true);
         }
+
     } catch (err) {
         console.error(err.message);
         res.send(false);

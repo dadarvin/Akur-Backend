@@ -37,9 +37,9 @@ app.post('/login', async (req, res) => {
 
 app.post('/register', async (req, res) => {
     try {
-        const username = req.body.username;
-        const email = req.body.email;
-        const password = req.body.password;
+        let username = req.body.username;
+        let email = req.body.email;
+        let password = req.body.password;
 
         const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
 

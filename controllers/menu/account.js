@@ -111,12 +111,12 @@ app.post("/changePassword", async (req, res) => {
     try {
         const oldPassword = req.body.oldPassword;
         const newPassword = req.body.newPassword;
-        const username = req.body.username;
+        const user_id = req.body.user_id;
 
-        let checkPassword = await client.query(`SELECT password FROM users WHERE username = '${username}'`);
+        let checkPassword = await client.query(`SELECT password FROM users WHERE user_id = ${user_id}`);
         // console.log(checkPassword.rows)
         if (checkPassword.rows[0].password == oldPassword) {
-            const values = await client.query(`UPDATE users SET password = '${newPassword}' WHERE username = '${username}'`);
+            const values = await client.query(`UPDATE users SET password = '${newPassword}' WHERE user_id = '${user_id}'`);
             // res.json({
             //   success:true
             // })

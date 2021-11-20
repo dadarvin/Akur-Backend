@@ -140,6 +140,7 @@ app.post("/scanResi", async (req, res) => {
         const user_id = req.body.user_id;
         const nama_kurir = req.body.nama_kurir;
         const no_resi = req.body.no_resi;
+        console.log(nama_kurir);
 
         let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
         console.log(getKurir);

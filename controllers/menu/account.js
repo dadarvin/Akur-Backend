@@ -148,7 +148,7 @@ app.post("/scanResi", async (req, res) => {
         // console.log(checkPassword.rows)
         if (id_kurir != undefined || id_kurir != null) {
             const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) 
-            VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', ${no_resi}, ${currentTime})`);
+            VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', ${no_resi}, '${currentTime})'`);
 
             res.send(true);
         }

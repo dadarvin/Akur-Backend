@@ -143,7 +143,7 @@ app.post("/scanResi", async (req, res) => {
 
         let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
         let id_kurir = getKurir.rows[0].id_kurir;
-        let currentTime = moment();
+        let currentTime = moment().toISOString();;
         // console.log(checkPassword.rows)
         if (id_kurir != undefined || id_kurir != null) {
             const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) 

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path')
 const client = require(path.join(__dirname, '../../utility/configDatabase'));
+const moment = require('moment');
 // const { Pool } = require('pg');
 // const pool = new Pool({
 //   connectionString: process.env.DATABASE_URL,
@@ -120,6 +121,34 @@ app.post("/changePassword", async (req, res) => {
             // res.json({
             //   success:true
             // })
+            res.send(true);
+        }
+        else {
+            res.send(false);
+            // res.json({
+            //   success:false
+            // })
+        }
+    } catch (err) {
+        console.error(err.message);
+        res.json(err);
+    }
+});
+
+app.post("/scanResi", async (req, res) => {
+    try {
+        const user_id = req.body.user_id;
+        const nama_kurir = req.body.nama_kurir;
+        const no_resi = req.body.no_resi;
+
+        let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
+        let id_kurir = getKurir.rows[0].id_kurir;
+        let currentTime = moment();
+        // console.log(checkPassword.rows)
+        if (id_kurir != undefined || id_kurir != null) {
+            const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) 
+            VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', ${no_resi}, ${currentTime}) `);
+
             res.send(true);
         }
         else {

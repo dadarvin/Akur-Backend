@@ -20,7 +20,6 @@ app
   .use(express.urlencoded({
     extended: true
   }))
-  .use(require('connect').bodyParser())
   .use(cors())
 
 app.get('/', async function (req, res) {

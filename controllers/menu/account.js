@@ -146,11 +146,13 @@ app.post("/scanResi", async (req, res) => {
         console.log(getKurir);
         let id_kurir = getKurir.rows[0].id_kurir;
         let currentTime = moment().utcOffset(0, true).format();
-        console.log(id_kurir);
-        console.log(currentTime);
+        let indexOfGMT = currentTime.search(" GMT");
+        let scanTime = currentTime.slice(0, indexOfGMT);
+        console.log(scanTime);
         // console.log(checkPassword.rows)
         if (id_kurir != undefined || id_kurir != null) {
-            const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', ${no_resi}, '${currentTime}')`);
+
+            const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', ${no_resi}, '${scanTime}')`);
 
             res.send(true);
         }

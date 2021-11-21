@@ -145,7 +145,7 @@ app.post("/scanResi", async (req, res) => {
         let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
         console.log(getKurir);
         let id_kurir = getKurir.rows[0].id_kurir;
-        let currentTime = moment().utcOffset(0, true).format();
+        let currentTime = moment();
         let indexOfGMT = currentTime.search(" GMT");
         let scanTime = currentTime.slice(0, indexOfGMT);
         console.log(scanTime);

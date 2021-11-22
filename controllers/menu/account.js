@@ -168,4 +168,17 @@ app.post("/scanResi", async (req, res) => {
     }
 });
 
+app.post("/history", async (req, res) => {
+    try {
+        const user_id = req.body.user_id;
+
+        const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM api_info as a LEFT JOIN qr_scan AS q on q.id_qr = a.id_qr WHERE user_id = ${user_id}`);
+
+        return values;
+    } catch (err) {
+        console.error(err.message);
+        res.send(false);
+    }
+});
+
 module.exports = app;

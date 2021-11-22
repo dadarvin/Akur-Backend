@@ -146,14 +146,10 @@ app.post("/scanResi", async (req, res) => {
         console.log(getKurir);
         let id_kurir = getKurir.rows[0].id_kurir;
         let currentTime = moment();
-        let indexOfGMT = currentTime.search(" GMT");
-        let scanTime = currentTime.slice(0, indexOfGMT);
-        console.log(scanTime);
         // console.log(checkPassword.rows)
         if (id_kurir != undefined || id_kurir != null) {
 
-            const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', ${no_resi}, '${scanTime}')`);
-
+            const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', ${no_resi}, '${currentTime}')`);
             res.send(true);
         }
         else {
@@ -174,7 +170,7 @@ app.post("/history", async (req, res) => {
 
         const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM api_info as a LEFT JOIN qr_scan AS q on q.id_qr = a.id_qr WHERE user_id = ${user_id}`);
 
-        return values;
+        res.json(values);
     } catch (err) {
         console.error(err.message);
         res.send(false);

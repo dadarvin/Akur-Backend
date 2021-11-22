@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path')
 const client = require(path.join(__dirname, '../../utility/configDatabase'));
+const axios = require('axios');
 const moment = require('moment');
 // const { Pool } = require('pg');
 // const pool = new Pool({
@@ -168,7 +169,21 @@ app.post("/history", async (req, res) => {
     try {
         const user_id = req.body.user_id;
 
-        const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM qr_scan AS q LEFT JOIN api_info as a on q.id_qr = a.id_qr WHERE user_id = ${user_id}`);
+        // const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM qr_scan AS q LEFT JOIN api_info as a on q.id_qr = a.id_qr WHERE user_id = ${user_id}`);
+        const values = await client.query(`SELECT * FROM qr_scan WHERE user_id = ${user_id}`);
+
+        res.json(values.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.send(false);
+    }
+});
+
+app.post("/apiInfo", async (req, res) => {
+    try {
+        const id_qr = req.body.id_qr;
+
+        const barcodeInfo = await client.query(`SELECT nama_kurir, no_resi FROM qr_scan WHERE id_qr = ${id_qr}`);
 
         res.json(values.rows);
     } catch (err) {

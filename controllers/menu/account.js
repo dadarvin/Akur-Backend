@@ -174,7 +174,7 @@ app.post("/history", async (req, res) => {
         // const values = await client.query(`SELECT * FROM qr_scan WHERE user_id = ${user_id}`);
 
         res.json({
-            nama_kurir: values.rows[0].nama_kurir
+            id_qr: values.rows[0].id_qr
         });
         // res.json({
         //     id_qr: values.rows[0].id_qr,

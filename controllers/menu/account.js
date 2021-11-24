@@ -167,20 +167,23 @@ app.post("/scanResi", async (req, res) => {
 
 app.post("/history", async (req, res) => {
     try {
-        console.log("Masuk History");
         const user_id = req.body.user_id;
 
         const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM qr_scan AS q LEFT JOIN api_info as a on q.id_qr = a.id_qr WHERE user_id = ${user_id} ORDER BY q.id_qr DESC`);
         // const values = await client.query(`SELECT * FROM qr_scan WHERE user_id = ${user_id}`);
 
         res.json(values.rows);
-        // res.json({
-        //     id_qr: values.rows[0].id_qr,
-        //     nama_kurir: values.rows[0].nama_kurir,
-        //     no_resi: values.rows[0].no_resi,
-        //     jenis_kurir: values.rows[0].jenis_kurir,
-        //     date: values.rows[0].date,
-        // });
+    } catch (err) {
+        console.error(err.message);
+        res.send(false);
+    }
+});
+
+app.get("/formatResi", async (req, res) => {
+    try {
+        const values = await client.query(`SELECT * FROM kurir`);
+
+        res.json(values.rows);
     } catch (err) {
         console.error(err.message);
         res.send(false);

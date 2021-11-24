@@ -196,8 +196,24 @@ app.post("/apiInfo", async (req, res) => {
 
         const barcodeInfo = await client.query(`SELECT nama_kurir, no_resi FROM qr_scan WHERE id_qr = ${id_qr}`);
 
+        //------- belom selesai
+
         res.json(values.rows);
 
+    } catch (err) {
+        console.error(err.message);
+        res.send(false);
+    }
+});
+
+app.post("/dataKurir", async (req, res) => {
+    try {
+        const user_id = req.body.user_id;
+        const nama_kurir = req.body.nama_kurir;
+
+        const values = await client.query(`SELECT * FROM qr_scan WHERE nama_kurir = '${nama_kurir}' AND user_id = ${user_id}`);
+
+        res.json(values.rows);
     } catch (err) {
         console.error(err.message);
         res.send(false);

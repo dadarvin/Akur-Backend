@@ -212,7 +212,8 @@ app.post("/apiInfo", async (req, res) => {
             var values;
             axios(config)
                 .then(async function (response) {
-                    console.log(response.data['summary']);
+                    tempData = JSON.stringify(response.data);
+                    console.log(tempData.summary);
 
                     data = response.data['summary'];
                     console.log(data.service);

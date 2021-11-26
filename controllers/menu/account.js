@@ -211,7 +211,7 @@ app.post("/apiInfo", async (req, res) => {
 
             var values;
             axios(config)
-                .then(function (response) {
+                .then(async function (response) {
                     data = response.data.summary;
                     values = {
                         jenis_kurir: data.service,
@@ -226,8 +226,6 @@ app.post("/apiInfo", async (req, res) => {
                 .catch(function (error) {
                     console.log(error);
                 });
-
-
         } else {
             res.json(getData.rows[0]);
         }

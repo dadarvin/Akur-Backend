@@ -214,8 +214,14 @@ app.post("/apiInfo", async (req, res) => {
                 .then(async function (response) {
                     console.log(response.data);
                     data = response.data.summary;
+
+                    let packetService = data.service;
+                    if (data.service == undefined) {
+                        packetService = "-";
+                    }
+
                     values = {
-                        jenis_kurir: data.service,
+                        jenis_kurir: packetService,
                         date: data.date,
                         status: data.service
                     }

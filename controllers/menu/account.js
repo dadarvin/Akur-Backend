@@ -193,12 +193,30 @@ app.get("/formatResi", async (req, res) => {
 app.post("/apiInfo", async (req, res) => {
     try {
         const id_qr = req.body.id_qr;
+        const api_key = "7920e0c8e6aad029f11340b03627d8cd3a37b4cb6ae157373ad5cba276034096";
 
         const barcodeInfo = await client.query(`SELECT nama_kurir, no_resi FROM qr_scan WHERE id_qr = ${id_qr}`);
 
+        let kurir = barcodeInfo.rows[0].nama_kurir;
+        let resi = barcodeInfo.rows[0].no_resi;
+
+        var config = {
+            method: 'get',
+            url: `https://api.binderbyte.com/v1/track?api_key=${resi}&courier=${kurir}&awb=${api_key}`,
+            headers: {}
+        };
+
+        axios(config)
+            .then(function (response) {
+                res.json(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
         //------- belom selesai
 
-        res.json(values.rows);
+        res.json("No Data");
 
     } catch (err) {
         console.error(err.message);

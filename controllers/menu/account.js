@@ -212,6 +212,7 @@ app.post("/apiInfo", async (req, res) => {
             var values;
             axios(config)
                 .then(async function (response) {
+                    console.log(response.data);
                     data = response.data.summary;
                     values = {
                         jenis_kurir: data.service,

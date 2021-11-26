@@ -215,8 +215,10 @@ app.post("/apiInfo", async (req, res) => {
                     console.log(response.data);
                     data = response.data.summary;
 
-                    let packetService = data.service;
-                    if (data.service == undefined) {
+                    let packetService;
+                    try {
+                        packetService = data.service;
+                    } catch (err) {
                         packetService = "-";
                     }
 

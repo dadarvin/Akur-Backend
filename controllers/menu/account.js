@@ -141,7 +141,8 @@ app.post("/scanResi", async (req, res) => {
         const user_id = req.body.user_id;
         const nama_kurir = req.body.nama_kurir;
         const no_resi = req.body.no_resi;
-        console.log(nama_kurir);
+
+        //Tambahin Pengecekan kalo udah ada resi yang sama
 
         let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
         console.log(getKurir);
@@ -204,7 +205,7 @@ app.post("/apiInfo", async (req, res) => {
 
             var config = {
                 method: 'get',
-                url: `https://api.binderbyte.com/v1/track?api_key=${resi}&courier=${kurir}&awb=${api_key}`,
+                url: `https://api.binderbyte.com/v1/track?api_key=${api_key}&courier=${kurir}&awb=${resi}`,
                 headers: {}
             };
 
@@ -229,8 +230,6 @@ app.post("/apiInfo", async (req, res) => {
         } else {
             res.json(getData.rows[0]);
         }
-
-
 
     } catch (err) {
         console.error(err.message);

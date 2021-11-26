@@ -195,29 +195,42 @@ app.post("/apiInfo", async (req, res) => {
         const id_qr = req.body.id_qr;
         const api_key = "7920e0c8e6aad029f11340b03627d8cd3a37b4cb6ae157373ad5cba276034096";
 
-        const barcodeInfo = await client.query(`SELECT nama_kurir, no_resi FROM qr_scan WHERE id_qr = ${id_qr}`);
+        const getData = await client.query(`SELECT * FROM api_info WHERE id_qr = ${id_qr}`);
 
-        let kurir = barcodeInfo.rows[0].nama_kurir;
-        let resi = barcodeInfo.rows[0].no_resi;
+        if (getData.rows.length < 1) {
+            const barcodeInfo = await client.query(`SELECT nama_kurir, no_resi FROM qr_scan WHERE id_qr = ${id_qr}`);
+            let kurir = barcodeInfo.rows[0].nama_kurir;
+            let resi = barcodeInfo.rows[0].no_resi;
 
-        var config = {
-            method: 'get',
-            url: `https://api.binderbyte.com/v1/track?api_key=${resi}&courier=${kurir}&awb=${api_key}`,
-            headers: {}
-        };
+            var config = {
+                method: 'get',
+                url: `https://api.binderbyte.com/v1/track?api_key=${resi}&courier=${kurir}&awb=${api_key}`,
+                headers: {}
+            };
 
-        axios(config)
-            .then(function (response) {
-                data = response.data;
-                res.json(data.summary);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            var values;
+            axios(config)
+                .then(function (response) {
+                    data = response.data.summary;
+                    values = {
+                        jenis_kurir: data.service,
+                        date: data.date,
+                        status: data.service
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
 
-        //------- belom selesai
+            const insertAPI = await client.query(`INSERT INTO api_info (id_qr, jenis_kurir, date, status) VALUES (${id_qr}, '${values.jenis_kurir}', '${values.date}', '${values.service}')`);
+            //------- belom selesai
+            const newData = await client.query(`SELECT * FROM api_info WHERE id_qr = ${id_qr}`);
+            res.json(newData.rows[0]);
+        } else {
+            res.json(getData.rows[0]);
+        }
 
-        res.json("No Data");
+
 
     } catch (err) {
         console.error(err.message);

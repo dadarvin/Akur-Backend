@@ -143,11 +143,12 @@ app.post("/scanResi", async (req, res) => {
         const no_resi = req.body.no_resi;
 
         //Tambahin Pengecekan kalo udah ada resi yang sama
+        let cekData = await.client.query(`SELECT no`)
 
         let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
         console.log(getKurir);
         let id_kurir = getKurir.rows[0].id_kurir;
-        let currentTime = moment().format("YYYY-MM-DD hh:mm:ss");
+        let currentTime = moment().format("YYYY-MM-DD hh:mm");
         // console.log(checkPassword.rows)
         if (id_kurir != undefined || id_kurir != null) {
 

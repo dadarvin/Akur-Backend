@@ -213,28 +213,16 @@ app.post("/apiInfo", async (req, res) => {
             axios(config)
                 .then(async function (response) {
                     tempData = response.data;
-                    console.log(tempData);
-                    console.log(tempData.data.summary.status);
-                    console.log(tempData.data.summary.date);
-                    console.log(tempData.data.summary.courier);
-                    // data = response.data['summary'];
+                    values = {
+                        jenis_kurir: tempData.data.summary.service,
+                        date: tempData.data.summary.date,
+                        status: tempData.data.summary.status
+                    }
+                    console.log(values);
 
-                    // let packetService;
-                    // try {
-                    //     packetService = data.service;
-                    // } catch (err) {
-                    //     packetService = "-";
-                    // }
-
-                    // values = {
-                    //     jenis_kurir: packetService,
-                    //     date: data.date,
-                    //     status: data.service
-                    // }
-                    // const insertAPI = await client.query(`INSERT INTO api_info (id_qr, jenis_kurir, date, status) VALUES (${id_qr}, '${values.jenis_kurir}', '${values.date}', '${values.service}')`);
-
-                    // const newData = await client.query(`SELECT * FROM api_info WHERE id_qr = ${id_qr}`);
-                    // res.json(newData.rows[0]);
+                    const insertAPI = await client.query(`INSERT INTO api_info (id_qr, jenis_kurir, date, status) VALUES (${id_qr}, '${values.jenis_kurir}', '${values.date}', '${values.service}')`);
+                    const newData = await client.query(`SELECT * FROM api_info WHERE id_qr = ${id_qr}`);
+                    res.json(newData.rows[0]);
                 })
                 .catch(function (error) {
                     console.log(error);

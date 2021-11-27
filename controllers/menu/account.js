@@ -233,15 +233,15 @@ app.post("/apiInfo", async (req, res) => {
                 .then(async function (response) {
                     tempData = response.data;
                     let formatDate = moment(tempData.data.summary.date);
-                    let statusPaket = tempData.data.summary.status;
-                    if (statusPaket === "" || statusPaket.length < 1) {
-                        statusPaket = "-";
+                    let jenisKurir = tempData.data.summary.service;
+                    if (jenisKurir === "" || jenisKurir.length < 1) {
+                        jenisKurir = "-";
                     }
 
                     values = {
-                        jenis_kurir: tempData.data.summary.service,
+                        jenis_kurir: jenisKurir,
                         date: formatDate,
-                        status: statusPaket
+                        status: tempData.data.summary.status
                     }
                     console.log(values);
 

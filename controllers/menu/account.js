@@ -145,7 +145,7 @@ app.post("/scanResi", async (req, res) => {
         let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
         console.log(getKurir);
         let id_kurir = getKurir.rows[0].id_kurir;
-        let currentTime = moment().format("YYYY-MM-DD hh:mm");
+        let currentTime = moment().utcOffset(420).format("YYYY-MM-DD hh:mm");
         // console.log(checkPassword.rows)
         if (id_kurir != undefined || id_kurir != null) {
 
@@ -160,7 +160,7 @@ app.post("/scanResi", async (req, res) => {
         }
 
         // //Tambahin Pengecekan kalo udah ada resi yang sama
-        // let cekData = await client.query(`SELECT * FROM qr_scan WHERE no_resi = ${no_resi}`)
+        // let cekData = await client.query(`SELECT * FROM qr_scan WHERE no_resi = '${no_resi}'`)
         // if (cekData.rows.length > 0) {
         //     res.send(false);
         // } else {

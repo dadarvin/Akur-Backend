@@ -221,7 +221,7 @@ app.post("/apiInfo", async (req, res) => {
                     }
                     console.log(values);
 
-                    const insertAPI = await client.query(`INSERT INTO api_info (id_qr, jenis_kurir, date, status) VALUES (${id_qr}, '${values.jenis_kurir}', '${values.date}', '${values.service}')`);
+                    const insertAPI = await client.query(`INSERT INTO api_info (id_qr, jenis_kurir, date, status) VALUES (${id_qr}, '${values.jenis_kurir}', '${values.date}', '${values.status}')`);
                     const newData = await client.query(`SELECT * FROM api_info WHERE id_qr = ${id_qr}`);
                     res.json(newData.rows[0]);
                 })

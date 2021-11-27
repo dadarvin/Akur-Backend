@@ -214,9 +214,9 @@ app.post("/apiInfo", async (req, res) => {
                 .then(async function (response) {
                     tempData = response.data;
                     console.log(tempData);
-                    console.log(tempData.summary.status);
-                    console.log(tempData.summary.date);
-                    console.log(tempData.summary.courier);
+                    console.log(tempData.data.summary.status);
+                    console.log(tempData.data.summary.date);
+                    console.log(tempData.data.summary.courier);
                     // data = response.data['summary'];
 
                     // let packetService;

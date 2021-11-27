@@ -214,7 +214,9 @@ app.post("/apiInfo", async (req, res) => {
                 .then(async function (response) {
                     tempData = JSON.stringify(response.data);
                     console.log(tempData);
-
+                    console.log(tempData.data.summary.status);
+                    console.log(tempData.data.summary.date);
+                    console.log(tempData.data.summary.courier);
                     // data = response.data['summary'];
 
                     // let packetService;
@@ -224,15 +226,15 @@ app.post("/apiInfo", async (req, res) => {
                     //     packetService = "-";
                     // }
 
-                    values = {
-                        jenis_kurir: packetService,
-                        date: data.date,
-                        status: data.service
-                    }
-                    const insertAPI = await client.query(`INSERT INTO api_info (id_qr, jenis_kurir, date, status) VALUES (${id_qr}, '${values.jenis_kurir}', '${values.date}', '${values.service}')`);
+                    // values = {
+                    //     jenis_kurir: packetService,
+                    //     date: data.date,
+                    //     status: data.service
+                    // }
+                    // const insertAPI = await client.query(`INSERT INTO api_info (id_qr, jenis_kurir, date, status) VALUES (${id_qr}, '${values.jenis_kurir}', '${values.date}', '${values.service}')`);
 
-                    const newData = await client.query(`SELECT * FROM api_info WHERE id_qr = ${id_qr}`);
-                    res.json(newData.rows[0]);
+                    // const newData = await client.query(`SELECT * FROM api_info WHERE id_qr = ${id_qr}`);
+                    // res.json(newData.rows[0]);
                 })
                 .catch(function (error) {
                     console.log(error);

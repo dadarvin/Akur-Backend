@@ -3,7 +3,7 @@ const app = express();
 const path = require('path')
 const client = require(path.join(__dirname, '../../utility/configDatabase'));
 const axios = require('axios');
-const moment = require('moment');
+const moment = require('moment-timezone');
 // const { Pool } = require('pg');
 // const pool = new Pool({
 //   connectionString: process.env.DATABASE_URL,
@@ -145,7 +145,7 @@ app.post("/scanResi", async (req, res) => {
         let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
         console.log(getKurir);
         let id_kurir = getKurir.rows[0].id_kurir;
-        let currentTime = moment().zone("+07.00").format("YYYY-MM-DD hh:mm");
+        let currentTime = moment().tz("Asia/Bangkok").format("YYYY-MM-DD hh:mm");
         // console.log(checkPassword.rows)
         if (id_kurir != undefined || id_kurir != null) {
 

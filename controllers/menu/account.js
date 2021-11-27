@@ -232,6 +232,7 @@ app.post("/apiInfo", async (req, res) => {
             let formatDate = moment(tempData.data.summary.date);
             axios(config)
                 .then(async function (response) {
+                    console.log(response);
                     tempData = response.data;
                     console.log(tempData.data.summary.status);
                     values = {

@@ -241,7 +241,7 @@ app.post("/apiInfo", async (req, res) => {
                     values = {
                         jenis_kurir: tempData.data.summary.service,
                         date: formatDate,
-                        status: tempData.data.summary.status
+                        status: statusPaket
                     }
                     console.log(values);
 

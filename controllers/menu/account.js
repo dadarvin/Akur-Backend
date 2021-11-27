@@ -233,7 +233,11 @@ app.post("/apiInfo", async (req, res) => {
                 .then(async function (response) {
                     tempData = response.data;
                     let formatDate = moment(tempData.data.summary.date);
-                    console.log(tempData.data.summary.status);
+                    let statusPaket = tempData.data.summary.status;
+                    if (statusPaket === "" || statusPaket.length < 1) {
+                        statusPaket = "-";
+                    }
+
                     values = {
                         jenis_kurir: tempData.data.summary.service,
                         date: formatDate,

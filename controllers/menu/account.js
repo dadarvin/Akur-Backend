@@ -213,6 +213,7 @@ app.post("/apiInfo", async (req, res) => {
             axios(config)
                 .then(async function (response) {
                     tempData = response.data;
+                    console.log(tempData.data.summary.status);
                     values = {
                         jenis_kurir: tempData.data.summary.service,
                         date: tempData.data.summary.date,
@@ -230,7 +231,6 @@ app.post("/apiInfo", async (req, res) => {
         } else {
             res.json(getData.rows[0]);
         }
-
     } catch (err) {
         console.error(err.message);
         res.send(false);

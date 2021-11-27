@@ -215,16 +215,14 @@ app.post("/apiInfo", async (req, res) => {
                     tempData = JSON.stringify(response.data);
                     console.log(tempData);
 
-                    data = response.data['summary'];
-                    console.log(data.service);
-                    console.log(data.status);
+                    // data = response.data['summary'];
 
-                    let packetService;
-                    try {
-                        packetService = data.service;
-                    } catch (err) {
-                        packetService = "-";
-                    }
+                    // let packetService;
+                    // try {
+                    //     packetService = data.service;
+                    // } catch (err) {
+                    //     packetService = "-";
+                    // }
 
                     values = {
                         jenis_kurir: packetService,

@@ -229,11 +229,10 @@ app.post("/apiInfo", async (req, res) => {
                 headers: {}
             };
 
-            let formatDate = moment(tempData.data.summary.date);
             axios(config)
                 .then(async function (response) {
-                    console.log(response);
                     tempData = response.data;
+                    let formatDate = moment(tempData.data.summary.date);
                     console.log(tempData.data.summary.status);
                     values = {
                         jenis_kurir: tempData.data.summary.service,

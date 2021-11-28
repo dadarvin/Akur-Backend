@@ -60,6 +60,7 @@ app.post('/login', async (req, res) => {
         } else if (values.rows.length >= 1) {
             res.json({
                 user_id: values.rows[0].user_id,
+                username: values.rows[0].username
             });
         }
     } catch (err) {

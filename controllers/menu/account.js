@@ -33,17 +33,20 @@ app.post('/register', async (req, res) => {
         const checkExisting = await client.query(`SELECT COUNT(username) from users WHERE username = '${username}'`);
 
         if (checkExisting.rows[0].count > 0) {
-            res.json("User Exists !");
+            // res.json("User Exists !");
+            res.send(false);
         } else {
             const values = await client.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${password}')`);
             console.log("Akun Berhasil didaftarkan");
-            res.json("Successfully Registered");
+            // res.json("Successfully Registered");
+            res.send(true);
         }
 
     } catch (err) {
         console.error(err.message);
         console.log("Akun gagal didaftarkan");
-        res.json(err);
+        // res.json(err);
+        res.send(false);
     }
 });
 

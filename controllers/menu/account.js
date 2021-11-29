@@ -268,7 +268,7 @@ app.post("/dataKurir", async (req, res) => {
         const nama_kurir = req.body.nama_kurir;
 
         // const values = await client.query(`SELECT * FROM qr_scan WHERE nama_kurir = '${nama_kurir}' AND user_id = ${user_id}`);
-        const values = await client.query(`SELECT * FROM qr_scan LEFT JOIN api_info ON qr_scan.id_qr = api_info.id_qr WHERE nama_kurir = '${nama_kurir}' AND user_id = ${user_id};`);
+        const values = await client.query(`SELECT q.id_qr, q.user_id, q.id_kurir, q.nama_kurir, q.no_resi, q.date, a.id_api, a.jenis_kurir, a.status FROM qr_scan as q LEFT JOIN api_info as a ON q.id_qr = a.id_qr WHERE q.nama_kurir = '${nama_kurir}' AND q.user_id = ${user_id}`);
 
         res.json(values.rows);
     } catch (err) {

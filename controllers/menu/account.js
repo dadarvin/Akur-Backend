@@ -142,9 +142,9 @@ app.post("/changePassword", async (req, res) => {
 
 app.post("/scanResi", async (req, res) => {
     try {
-        // const user_id = req.body.user_id;
-        // const nama_kurir = req.body.nama_kurir;
-        // const no_resi = req.body.no_resi;
+        const user_id = req.body.user_id;
+        const nama_kurir = req.body.nama_kurir;
+        const no_resi = req.body.no_resi;
 
         // let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
         // let id_kurir = getKurir.rows[0].id_kurir;

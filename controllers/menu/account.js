@@ -170,17 +170,12 @@ app.post("/scanResi", async (req, res) => {
             let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
             let id_kurir = getKurir.rows[0].id_kurir;
             let currentTime = moment();
-            // console.log(checkPassword.rows)
             if (id_kurir != undefined || id_kurir != null) {
-
                 const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', '${no_resi}', '${currentTime}')`);
                 res.send(true);
             }
             else {
                 res.send(false);
-                // res.json({
-                //   success:false
-                // })
             }
         }
     } catch (err) {
@@ -193,7 +188,7 @@ app.post("/history", async (req, res) => {
     try {
         const user_id = req.body.user_id;
 
-        const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM qr_scan AS q LEFT JOIN api_info as a on q.id_qr = a.id_qr WHERE user_id = ${user_id} ORDER BY q.id_qr DESC`);
+        const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM qr_scan AS q LEFT JOIN api_info as a on q.id_qr = a.id_qr WHERE user_id = ${user_id} ORDER BY q.id_qr ASC`);
         // const values = await client.query(`SELECT * FROM qr_scan WHERE user_id = ${user_id}`);
 
         res.json(values.rows);

@@ -146,21 +146,9 @@ app.post("/scanResi", async (req, res) => {
         const nama_kurir = req.body.nama_kurir;
         const no_resi = req.body.no_resi;
 
-        // let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
-        // let id_kurir = getKurir.rows[0].id_kurir;
-        // let currentTime = moment();
-        // // console.log(checkPassword.rows)
-        // if (id_kurir != undefined || id_kurir != null) {
-
-        //     const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', '${no_resi}', '${currentTime}')`);
-        //     res.send(true);
-        // }
-        // else {
-        //     res.send(false);
-        //     // res.json({
-        //     //   success:false
-        //     // })
-        // }
+        if (nama_kurir == 'Other') {
+            res.send(false);
+        }
 
         //Tambahin Pengecekan kalo udah ada resi yang sama
         let cekData = await client.query(`SELECT * FROM qr_scan WHERE no_resi = '${no_resi}'`)

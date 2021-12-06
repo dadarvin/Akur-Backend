@@ -81,6 +81,7 @@ app.post('/userinfo', async (req, res) => {
         } else if (values.rows.length >= 1) {
             res.json({
                 nama_toko: values.rows[0].nama_toko,
+                phone_number: values.rows[0].phone_number,
                 email: values.rows[0].email,
                 username: values.rows[0].username
             });
@@ -166,7 +167,6 @@ app.post("/scanResi", async (req, res) => {
                 }
             }
         }
-
 
     } catch (err) {
         console.error(err.message);

@@ -148,24 +148,26 @@ app.post("/scanResi", async (req, res) => {
 
         if (nama_kurir == 'Other') {
             res.send(false);
+        } else {
+            //Tambahin Pengecekan kalo udah ada resi yang sama
+            let cekData = await client.query(`SELECT * FROM qr_scan WHERE no_resi = '${no_resi}'`)
+            if (cekData.rows.length > 0) {
+                res.send(false);
+            } else {
+                let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
+                let id_kurir = getKurir.rows[0].id_kurir;
+                let currentTime = moment();
+                if (id_kurir != undefined || id_kurir != null) {
+                    const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', '${no_resi}', '${currentTime}')`);
+                    res.send(true);
+                }
+                else {
+                    res.send(false);
+                }
+            }
         }
 
-        //Tambahin Pengecekan kalo udah ada resi yang sama
-        let cekData = await client.query(`SELECT * FROM qr_scan WHERE no_resi = '${no_resi}'`)
-        if (cekData.rows.length > 0) {
-            res.send(false);
-        } else {
-            let getKurir = await client.query(`SELECT id_kurir FROM kurir WHERE nama_kurir = '${nama_kurir}'`);
-            let id_kurir = getKurir.rows[0].id_kurir;
-            let currentTime = moment();
-            if (id_kurir != undefined || id_kurir != null) {
-                const values = await client.query(`INSERT into qr_scan (user_id, id_kurir, nama_kurir, no_resi, date) VALUES (${user_id}, ${id_kurir}, '${nama_kurir}', '${no_resi}', '${currentTime}')`);
-                res.send(true);
-            }
-            else {
-                res.send(false);
-            }
-        }
+
     } catch (err) {
         console.error(err.message);
         res.json(err);

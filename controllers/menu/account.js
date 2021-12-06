@@ -4,14 +4,6 @@ const path = require('path')
 const client = require(path.join(__dirname, '../../utility/configDatabase'));
 const axios = require('axios');
 const moment = require('moment');
-// const { Pool } = require('pg');
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: {
-//     rejectUnauthorized: false
-//   }
-// })
-// const client = await pool.connect();
 
 app.get("/show", async (req, res) => {
     try {

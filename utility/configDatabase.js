@@ -7,7 +7,6 @@ const client = new Pool({
         rejectUnauthorized: false
     }
 })
-// const client = await pool.connect();
 
 module.exports = client;
 

@@ -5,8 +5,8 @@ An Android application REST API app using [Express 4](http://expressjs.com/).
 ## Running Locally
 
 ```sh
-$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
+$ git clone https://github.com/dadarvin/Akur-Backend
+$ cd akur-backend
 $ npm install
 $ npm start
 ```

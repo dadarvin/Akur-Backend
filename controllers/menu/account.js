@@ -170,7 +170,7 @@ app.post("/history", async (req, res) => {
     try {
         const user_id = req.body.user_id;
 
-        const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM qr_scan AS q LEFT JOIN api_info as a on q.id_qr = a.id_qr WHERE user_id = ${user_id} ORDER BY q.id_qr ASC`);
+        const values = await client.query(`SELECT q.id_qr, q.nama_kurir, q.no_resi, a.jenis_kurir, q.date FROM qr_scan AS q LEFT JOIN api_info as a on q.id_qr = a.id_qr WHERE user_id = ${user_id} ORDER BY q.id_qr DESC`);
         // const values = await client.query(`SELECT * FROM qr_scan WHERE user_id = ${user_id}`);
 
         res.json(values.rows);
@@ -199,8 +199,8 @@ app.post("/apiInfo", async (req, res) => {
         const getData = await client.query(`SELECT * FROM api_info WHERE id_qr = ${id_qr}`);
 
         if (getData.rows.length < 1) {
-            const barcodeInfo = await client.query(`SELECT nama_kurir, no_resi FROM qr_scan WHERE id_qr = ${id_qr}`);
-            let kurir = barcodeInfo.rows[0].nama_kurir;
+            const barcodeInfo = await client.query(`SELECT no_resi, courier_param FROM qr_scan WHERE id_qr = ${id_qr}`);
+            let kurir = barcodeInfo.rows[0].courier_param;
             let resi = barcodeInfo.rows[0].no_resi;
 
             var config = {
